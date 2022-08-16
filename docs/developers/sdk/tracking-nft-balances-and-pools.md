@@ -90,8 +90,8 @@ createBalanceManager< Promise<BalanceManager> >(
 
 * stopUpdates() - Stops event listeners and balance updates
 * items - `ERC721Item[]`, current tracked balance 
-* token: - `ERC721` that is being tracked
-*  address - `string`, target address that holds the NFTs
+* token - `ERC721` that is being tracked
+* address - `string`, target address that holds the NFTs
 
 
 ```ts title="Example"

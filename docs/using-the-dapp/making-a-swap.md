@@ -4,40 +4,29 @@ sidebar_position: 2
 
 # Making A Swap
 
-Add **xdf Markdown or React** files to `src/pages` to create a **standalone page**:
+Enter the **[AssetMerge App](https://assetmerge.xyz/app/)** to start swapping NFTs.
 
-- `src/pages/index.js` → `localhost:3000/`
-- `src/pages/foo.md` → `localhost:3000/foo`
-- `src/pages/foo/bar.js` → `localhost:3000/foo/bar`
+## Select The Pair
 
-## Create your first React Page
+To change pairs, click the name of a token to bring up the token selector.
 
-Create a file at `src/pages/my-react-page.js`:
+![](./images/choosePool.png)
 
-```jsx title="src/pages/my-react-page.js"
-import React from 'react';
-import Layout from '@theme/Layout';
+## View Pool & Listings
+Here you can see pool details, such as pair name, TVL, and price statistics.
+Below you can toggle between viewing NFTs in the pool and NFTs in your wallet, select 1 or more NFTs you want to trade and click swap to make the trade.
 
-export default function MyReactPage() {
-  return (
-    <Layout>
-      <h1>My React page</h1>
-      <p>This is a React page</p>
-    </Layout>
-  );
-}
-```
+![](./images/viewPool.png)
 
-A new page is now available at [http://localhost:3000/my-react-page](http://localhost:3000/my-react-page).
+:::tip Buy Or Sell Items
+On the swap page, [https://assetmerge.xyz/app](https://assetmerge.xyz/app), click the toggle button to switch between buying or selling.
 
-## Create your first Markdown Page
+![](./images/switchButton.png)
+:::
 
-Create a file at `src/pages/my-markdown-page.md`:
+## Select Items And Confirm Swap
 
-```mdx title="src/pages/my-markdown-page.md"
-# My Markdown page
+Simply select the items you want to trade, click Swap and finally confirm the trade on the confirmation pop-up.
 
-This is a Markdown page
-```
+![](./images/confirmSwap.png)
 
-A new page is now available at [http://localhost:3000/my-markdown-page](http://localhost:3000/my-markdown-page).

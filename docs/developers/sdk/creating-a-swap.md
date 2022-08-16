@@ -4,97 +4,64 @@ sidebar_position: 3
 
 # Creating a Swap
 
-Docusaurus supports **[Markdown](https://daringfireball.net/projects/markdown/syntax)** and a few **additional features**.
+Helper methods for calculating values for performing a swap through the *Router* contract. See **[Router](/docs/developers/smart-contracts/router#swaps)** for Router swap methods.
 
-## LiquidityPool
+Return values for these methods can be passed straight into the Ethers contract call.
+```ts title="Example"
+import { createBuyParams } from '@assetmerge/sdk'
 
-Markdown documents have metadata at the top called [Front Matter](https://jekyllrb.com/docs/front-matter/):
-
-```text title="my-doc.md"
-// highlight-start
----
-id: my-doc-id
-title: My document title
-description: My document description
-slug: /my-custom-url
----
-// highlight-end
-
-## Markdown heading
-
-Markdown text with [links](./hello.md)
+const buyParams = createBuyParams(...inputs)
+await router.swapERC20ForERC721(...buyParams)
 ```
 
-## Links
+## Buy Parameters
 
-Regular Markdown links are supported, using url paths or relative file paths.
+``import { createBuyParams, createEtherBuyParams } from '@assetmerge/sdk'``
 
-```md
-Let's see how to [Create a page](/create-a-page).
+
+```ts
+// ERC721/ERC20 Pools
+createBuyParams<[BigNumber, string, string, BigNumber[], string]>(
+  ftToken: ERC20,
+  nftToken: ERC721,
+  to: string,
+  items: ERC721Item[],
+  ftReserves: BigNumber,
+  nftReserves: BigNumber
+)
+
+// ERC721/Ether Pools
+createEtherBuyParams<[string, BigNumber[], string, { value: BigNumber }]>(
+  nftToken: ERC721,
+  to: string,
+  items: ERC721Item[],
+  ftReserves: BigNumber,
+  nftReserves: BigNumber
+)
 ```
 
-```md
-Let's see how to [Create a page](./create-a-page.md).
+
+## Sell Parameters
+
+``import { createSellParams, createEtherBuyParams } from '@assetmerge/sdk'``
+
+```ts
+// ERC721/ERC20 Pools
+createSellParams<[string, BigNumber[], BigNumber, string]>(
+  nftToken: ERC721,
+  to: string,
+  items: ERC721Item[],
+  ftReserves: BigNumber,
+  nftReserves: BigNumber
+)
+
+// ERC721/Ether Pools
+createEtherBuyParams<[string, BigNumber[], string, { value: BigNumber }]>(
+  nftToken: ERC721,
+  to: string,
+  items: ERC721Item[],
+  ftReserves: BigNumber,
+  nftReserves: BigNumber
+)
 ```
 
-**Result:** Let's see how to [Create a page](./create-a-page.md).
-
-## Images
-
-Regular Markdown images are supported.
-
-You can use absolute paths to reference images in the static directory (`static/img/docusaurus.png`):
-
-```md
-![Docusaurus logo](/img/docusaurus.png)
-```
-
-![Docusaurus logo](/img/docusaurus.png)
-
-You can reference images relative to the current file as well, as shown in [the extra guides](../tutorial-extras/manage-docs-versions.md).
-
-## Code Blocks
-
-Markdown code blocks are supported with Syntax highlighting.
-
-    ```jsx title="src/components/HelloDocusaurus.js"
-    function HelloDocusaurus() {
-        return (
-            <h1>Hello, Docusaurus!</h1>
-        )
-    }
-    ```
-
-```jsx title="src/components/HelloDocusaurus.js"
-function HelloDocusaurus() {
-  return <h1>Hello, Docusaurus!</h1>;
-}
-```
-
-## Admonitions
-
-Docusaurus has a special syntax to create admonitions and callouts:
-
-    :::tip My tip
-
-    Use this awesome feature option
-
-    :::
-
-    :::danger Take care
-
-    This action is dangerous
-
-    :::
-
-:::tip My tip
-
-Use this awesome feature option
-
-:::
-
-:::danger Take care
-
-This action is dangerous
-
-:::

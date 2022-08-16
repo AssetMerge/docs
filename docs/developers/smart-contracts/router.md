@@ -12,6 +12,8 @@ The current router supports swaps for our two types of liquidity pools; ERC721/E
 
 ## Swaps
 
+Our SDK provides some helpers to generate parameters for swap calls, **[Creating a Swap](/docs/developers/sdk/creating-a-swap)**.
+
 ### ERC721/ERC20 Swap Methods
 
 ```ts

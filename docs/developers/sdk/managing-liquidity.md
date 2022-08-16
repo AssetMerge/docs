@@ -4,97 +4,41 @@ sidebar_position: 4
 
 # Managing Liquidity
 
-Docusaurus supports **[Markdown](https://daringfireball.net/projects/markdown/syntax)** and a few **additional features**.
+Helper methods managing liquidity through the *Router* contract. See **[Router](/docs/developers/smart-contracts/router#liquidity-actions)** for Router swap methods.
 
-## Front Matter
+Return values for these methods can be passed straight into the Ethers contract call.
+```ts title="Example"
+import { createAddLiquidityParams } from '@assetmerge/sdk'
 
-Markdown documents have metadata at the top called [Front Matter](https://jekyllrb.com/docs/front-matter/):
-
-```text title="my-doc.md"
-// highlight-start
----
-id: my-doc-id
-title: My document title
-description: My document description
-slug: /my-custom-url
----
-// highlight-end
-
-## Markdown heading
-
-Markdown text with [links](./hello.md)
+const addParams = createAddLiquidityParams(...inputs)
+await router.addERC721Liquidity(...addParams)
 ```
 
-## Links
+## Generating Router Contract Parameters
 
-Regular Markdown links are supported, using url paths or relative file paths.
+### Add Liquidity
 
-```md
-Let's see how to [Create a page](/create-a-page).
+``import { createAddLiquidityParams, createAddEtherLiquidityParams } from '@assetmerge/sdk'``
+
+```ts
+// ERC721/ERC20 Pools
+createAddLiquidityParams<[string, string, BigNumber, BigNumber[], BigNumber[], string]>(
+  ftToken: ERC20,
+  nftToken: ERC721,
+  to: string,
+  ftReserves: BigNumber,
+  globalNftWeight: BigNumber,
+  inputs: { item: ERC721Item, price: BigNumber }[],
+  customFloor?: BigNumber
+)
+
+// ERC721/Ether Pools
+createAddEtherLiquidityParams<[string, BigNumber[], BigNumber[], string, { value: BigNumber }]>(
+  nftToken: ERC721,
+  to: string,
+  ftReserves: BigNumber,
+  globalNftWeight: BigNumber,
+  inputs: { item: ERC721Item, price: BigNumber }[],
+  customFloor?: BigNumber
+)
 ```
-
-```md
-Let's see how to [Create a page](./create-a-page.md).
-```
-
-**Result:** Let's see how to [Create a page](./create-a-page.md).
-
-## Images
-
-Regular Markdown images are supported.
-
-You can use absolute paths to reference images in the static directory (`static/img/docusaurus.png`):
-
-```md
-![Docusaurus logo](/img/docusaurus.png)
-```
-
-![Docusaurus logo](/img/docusaurus.png)
-
-You can reference images relative to the current file as well, as shown in [the extra guides](../tutorial-extras/manage-docs-versions.md).
-
-## Code Blocks
-
-Markdown code blocks are supported with Syntax highlighting.
-
-    ```jsx title="src/components/HelloDocusaurus.js"
-    function HelloDocusaurus() {
-        return (
-            <h1>Hello, Docusaurus!</h1>
-        )
-    }
-    ```
-
-```jsx title="src/components/HelloDocusaurus.js"
-function HelloDocusaurus() {
-  return <h1>Hello, Docusaurus!</h1>;
-}
-```
-
-## Admonitions
-
-Docusaurus has a special syntax to create admonitions and callouts:
-
-    :::tip My tip
-
-    Use this awesome feature option
-
-    :::
-
-    :::danger Take care
-
-    This action is dangerous
-
-    :::
-
-:::tip My tip
-
-Use this awesome feature option
-
-:::
-
-:::danger Take care
-
-This action is dangerous
-
-:::

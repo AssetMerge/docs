@@ -8,7 +8,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 const config = {
   title: 'AssetMerge',
   tagline: 'Dinosaurs are cool',
-  url: 'https://your-docusaurus-test-site.com',
+  url: 'https://docs.assetmerge.org/docs',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -17,7 +17,7 @@ const config = {
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'AssetMerge', // Usually your GitHub org/user name.
-  projectName: 'assetmerge-docs', // Usually your repo name.
+  projectName: 'docs', // Usually your repo name.
 
   // Even if you don't use internalization, you can use this field to set useful
   // metadata like html lang. For example, if your site is Chinese, you may want
@@ -67,7 +67,19 @@ const config = {
             type: 'doc',
             docId: '/category/using-the-dapp',
             position: 'left',
-            label: 'Docs',
+            label: 'dApp',
+          },
+          {
+            type: 'doc',
+            docId: '/category/protocol-mechanics',
+            position: 'left',
+            label: 'Protocol',
+          },
+          {
+            type: 'doc',
+            docId: '/category/developers',
+            position: 'left',
+            label: 'Developers',
           },
           {
             href: 'https://github.com/AssetMerge',
@@ -83,8 +95,16 @@ const config = {
             title: 'Docs',
             items: [
               {
-                label: 'Tutorial',
-                to: '/docs/intro',
+                to: '/doc/using-the-dapp',
+                label: 'dApp',
+              },
+              {
+                to: '/docs/protocol-mechanics',
+                label: 'Protocol',
+              },
+              {
+                to: '/docs/developers',
+                label: 'Developers',
               },
             ],
           },
@@ -92,21 +112,21 @@ const config = {
             title: 'Community',
             items: [
               {
-                label: 'Stack Overflow',
-                href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+                label: 'Medium',
+                href: 'https://assetmerge.medium.com',
               },
               {
                 label: 'Discord',
-                href: 'https://discordapp.com/invite/docusaurus',
+                href: 'https://discord.gg/WgUfSfmWNv',
               },
               {
                 label: 'Twitter',
-                href: 'https://twitter.com/docusaurus',
+                href: 'https://twitter.com/AssetMerge',
               },
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} AssetMerge. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} AssetMerge.`,
       },
       prism: {
         theme: lightCodeTheme,

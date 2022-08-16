@@ -4,97 +4,122 @@ sidebar_position: 2
 
 # Pools And Pricing
 
-Docusaurus supports **[Markdown](https://daringfireball.net/projects/markdown/syntax)** and a few **additional features**.
+*LiquidityPool* and *EtherLiquidityPool* are classes that tracks and live updates the ERC20/Ether and NFT reserves and prices of a AssetMergePool, created with *createPool* and *createEtherPool*.
 
-## Front Matter
+## Creating Pools
 
-Markdown documents have metadata at the top called [Front Matter](https://jekyllrb.com/docs/front-matter/):
+```ts
+import { providers } from 'ethers'
+import { createPool, createEtherPool, fetchERC20, fetchERC721 } from '@assetmerge/sdk'
 
-```text title="my-doc.md"
-// highlight-start
----
-id: my-doc-id
-title: My document title
-description: My document description
-slug: /my-custom-url
----
-// highlight-end
+const provider = providers.getDefaultProvider()
+const ftToken = await fetchERC20(ERC20_ADDRESS, provider)
+const nftToken = await fetchERC721(ERC721_ADDRESS, provider)
 
-## Markdown heading
-
-Markdown text with [links](./hello.md)
-```
-
-## Links
-
-Regular Markdown links are supported, using url paths or relative file paths.
-
-```md
-Let's see how to [Create a page](/create-a-page).
-```
-
-```md
-Let's see how to [Create a page](./create-a-page.md).
-```
-
-**Result:** Let's see how to [Create a page](./create-a-page.md).
-
-## Images
-
-Regular Markdown images are supported.
-
-You can use absolute paths to reference images in the static directory (`static/img/docusaurus.png`):
-
-```md
-![Docusaurus logo](/img/docusaurus.png)
-```
-
-![Docusaurus logo](/img/docusaurus.png)
-
-You can reference images relative to the current file as well, as shown in [the extra guides](../tutorial-extras/manage-docs-versions.md).
-
-## Code Blocks
-
-Markdown code blocks are supported with Syntax highlighting.
-
-    ```jsx title="src/components/HelloDocusaurus.js"
-    function HelloDocusaurus() {
-        return (
-            <h1>Hello, Docusaurus!</h1>
-        )
-    }
-    ```
-
-```jsx title="src/components/HelloDocusaurus.js"
-function HelloDocusaurus() {
-  return <h1>Hello, Docusaurus!</h1>;
+// ERC721/ERC20 Pool
+const itemUpdateA = (newItems: ERC721Item[]) => console.log("Pool A now holds:", newItems)
+const stateUpdateA = (newState: { ftReserves: BigNumber, nftReserves: BigNumber, lpSupply: BigNumber }) => {
+  console.log("LP A Reserves changed:", newState)
 }
+
+const erc20Pool = await createPool(
+  ftToken,      //  ftToken: ERC20,
+  nftToken,     //  nftToken: ERC721,
+  provider,     //  provider: providers.Provider,
+  itemUpdateA,  //  itemCallBack: (newData: any) => void,
+  stateUpdateA  //  stateCallback: (newData: any) => void
+)
+
+// ERC721/Ether Pool
+const itemUpdateB = (newItems: ERC721Item[]) => console.log("Pool B now holds:", newItems)
+const stateUpdateB = (newState: { ftReserves: BigNumber, nftReserves: BigNumber, lpSupply: BigNumber }) => {
+  console.log("LP B Reserves changed:", newState)
+}
+
+const etherPool = await createEtherPool = (
+  nftToken,     //  nftToken: ERC721,
+  provider,     //  provider: providers.Provider,
+  itemUpdateB,  //  itemCallBack: (newData: any) => void,
+  stateUpdateB  //  stateCallback: (newData: any) => void
+)
 ```
 
-## Admonitions
+## Working With Pools
+Above in [Creating Pools](/docs/developers/sdk/pools-and-pricing#creating-pools) you can set callbacks for pool updates, this is good for syncing changes to your app's state.
 
-Docusaurus has a special syntax to create admonitions and callouts:
+Along with the update callbacks defined when creating the pool instances you can also access the following methods.
+* address - `string`, address of pool
+* stopUpdates() - Stops event listeners and balance updates
+* nfts - `BalanceManager` instance that tracks current NFT reserves 
+* lpSupply - `BigNumber`, total supply of LP tokens
+* ftReserves - `BigNumber`, Current ERC20/Ether reserves of the pool
+* nftReserves - `BigNumber`, Sum of weights of the NFTs in the pool
 
-    :::tip My tip
+## Price Utilities
 
-    Use this awesome feature option
+**When making a swap through the Router, use the methods discused on [Creating a Swap](/docs/developers/sdk/creating-a-swap) to generate the contract call parameters.**
 
-    :::
+### Converting Weights To Price
 
-    :::danger Take care
+``import { weightToLiquidityPrice } from '@assetmerge/sdk'``
 
-    This action is dangerous
+```ts
+weightToLiquidityPrice<BigNumber>(
+  weight: BigNumber,
+  ftReserves: BigNumber,
+  globalNftWeight: BigNumber
+)
+```
 
-    :::
+### Weight Delta
 
-:::tip My tip
+``import { getDelta } from '@assetmerge/sdk'``
 
-Use this awesome feature option
+```ts
+getDelta<BigNumber>(
+  weight: BigNumber,
+  globalNfTWeight: BigNumber,
+)
+```
 
-:::
+### Buy Price
 
-:::danger Take care
+``import { getBuyPrice, getBuyPrices } from '@assetmerge/sdk'``
 
-This action is dangerous
+```ts
+getBuyPrice<BigNumber>(
+  item: ERC721Item,
+  weightSumIncItem: BigNumber,
+  ftReserves: BigNumber,
+  nftReserves: BigNumber
+)
+```
 
-:::
+```ts
+getBuyPrices<{ total: BigNumber, prices: { [id: string]: BigNumber } }>(
+  items: ERC721Item[],
+  ftReserves: BigNumber,
+  nftReserves: BigNumber
+)
+```
+
+### Sell Price
+
+``import { getSellPrice, getSellPrices } from '@assetmerge/sdk'``
+
+```ts
+getSellPrice<BigNumber>(
+  item: ERC721Item,
+  weightSumIncItem: BigNumber,
+  ftReserves: BigNumber,
+  nftReserves: BigNumber
+)
+```
+
+```ts
+getSellPrices<{ total: BigNumber, prices: { [id: string]: BigNumber } }>(
+  items: ERC721Item[],
+  ftReserves: BigNumber,
+  nftReserves: BigNumber
+)
+```

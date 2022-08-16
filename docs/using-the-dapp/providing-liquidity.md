@@ -6,6 +6,8 @@ sidebar_position: 3
 
 Anyone can provide liquidity, all you need is at least 1 NFT you want to provide and Ether worth the same value as the NFTs you are providing.
 
+> **Make sure you understand the risks of providing liquidity, it is recommended to read the [Protocol Mechanics](/docs/category/protocol-mechanics)**
+
 :::tip Add Or Remove Liquidity
 On the provide page, [https://assetmerge.xyz/app/liquidity](https://assetmerge.xyz/app/liquidity), select the pair you want to provide liquidity for and then make sure you are viewing your NFT balance.
 
