@@ -1,0 +1,8 @@
+{
+  "label": "Protocol Mechanics",
+  "position": 3,
+  "link": {
+    "type": "generated-index",
+    "description": "How does pricing, liquidity provision and fees work."
+  }
+}
