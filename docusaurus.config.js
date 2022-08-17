@@ -91,15 +91,15 @@ const config = {
             title: 'Docs',
             items: [
               {
-                to: '/doc/using-the-dapp',
+                to: '/docs/category/using-the-dapp',
                 label: 'dApp',
               },
               {
-                to: '/docs/protocol-mechanics',
+                to: '/docs/category/protocol-mechanics',
                 label: 'Protocol',
               },
               {
-                to: '/docs/developers',
+                to: '/docs/category/developers',
                 label: 'Developers',
               },
             ],
